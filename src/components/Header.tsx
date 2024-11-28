@@ -13,6 +13,20 @@ const Header = () => {
         setIsCartOpen(!isCartOpen)
     }
 
+    const handleSearch = () => {
+        if(searchProduct.trim() !==  ''){
+            console.log("Buscando por", searchProduct);
+        }else{
+            console.log("Produto nao encontrado")
+        }
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if(e.key === 'Enter'){
+            handleSearch()
+        }
+    }
+
     return(
         <div className="principal-container">
             <header className="header-container">
@@ -25,6 +39,7 @@ const Header = () => {
                 type="text"
                 placeholder="Pesquise seu produto aqui..."
                 aria-label="Campo de busca"
+                onKeyDown={handleKeyDown}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchProduct(e.target.value)} />
 
                 <img 
