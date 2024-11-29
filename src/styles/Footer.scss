@@ -1,0 +1,67 @@
+@import './variables.scss';
+
+.footer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+
+    grid-template-areas: 
+    "logo useful-links follow-us address";
+
+    .logo{
+        grid-area: logo;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .useful-links{
+        grid-area: useful-links;
+    }
+
+    .follow-us{
+        grid-area: follow-us;
+    }
+
+    .address{
+        grid-area: address;
+    }
+
+    .footer-column{
+        h3{
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #f4d03f;
+        }
+
+        img{
+            width: 150px;
+            height: 80px;
+        }
+
+        ul{
+            list-style: none;
+            padding: 0;
+
+            li{
+                margin-bottom: 8px;
+
+                a{
+                    color: #f4d03f;
+                }
+            }
+        }
+
+        p{
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        &.useful-links{
+
+        }
+    }
+}
