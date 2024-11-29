@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import DataFetchReducer from './reducers/dataReducer';
 
 const rootReducer = combineReducers({
-    someState: someReducer, //aqui fica o reducer
+    data: DataFetchReducer, //aqui fica o reducer
 }) 
 
 
