@@ -1,23 +1,47 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
+
+//images
 import comic from '../images/comics.png'
 import cartIcon from '../images/shopping-cart.png'
 import close from '../images/close.png'
+
+//styles
 import '../styles/Header.scss'
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from '../redux/store'
+import { useNavigate } from "react-router-dom";
+import { setId } from "../redux/slice/comicsSlice.reducer";
 
 const Header = () => {
     const [searchProduct, setSearchProduct] = useState<string>('');
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
-
+    const {products} = useSelector((state: RootState) => state.comics)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const toggleCartModal = () => {
         setIsCartOpen(!isCartOpen)
     }
 
-    const handleSearch = () => {
+    const handleSearch = () => { // faz a busca do produto
         if(searchProduct.trim() !==  ''){
-            console.log("Buscando por", searchProduct);
+            if(!products || products.length === 0){
+                console.log('Nenhum produto encontrado')
+            }
+
+            const foundProduct = products.find(product => product.title.toLowerCase().includes(searchProduct.toLowerCase()))
+
+            if(foundProduct){
+                dispatch(setId(foundProduct.id));
+                navigate(`/Products/${foundProduct.id}`, {state: {product: foundProduct}})
+            }else{
+                console.log('Produto nao encontrado')
+            }
+            setSearchProduct('')
         }else{
-            console.log("Produto nao encontrado")
+            console.log('Digite um termo de busca valido')
         }
     }
 

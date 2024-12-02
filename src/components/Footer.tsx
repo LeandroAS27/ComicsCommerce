@@ -1,4 +1,7 @@
+//styles
 import '../styles/Footer.scss';
+
+//images
 import comic from '../images/comics.png'
 
 const Footer = () => {
