@@ -1,6 +1,12 @@
+import React from "react";
 import { useEffect } from "react";
 import { motion} from 'framer-motion'
 import { useNavigate } from "react-router-dom";
+
+//material ui
+import { makeStyles, createStyles } from "@mui/styles";
+import { Theme } from "@mui/material/styles";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -27,7 +33,7 @@ const ProductList: React.FC = () => {
         dispatch(fetchComics());
     }, [dispatch])
 
-    if (loading) return <p className={styles["loader"]}></p>;
+    if (loading) return <p><CircularProgress/></p>;
     if (error) return <p>{error}</p>
 
     return(
