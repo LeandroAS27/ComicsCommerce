@@ -1,6 +1,6 @@
 import axios from "axios";
 import CryptoJS from 'crypto-js';
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 interface Thumbnail {
     path: string;
@@ -17,12 +17,14 @@ interface State{
     products: Comic[];
     error: string | null;
     loading: boolean;
+    id: number | null,
 }
 
 const initialState: State = {
     products: [],
     error: null,
     loading: false,
+    id: null,
 }
 
 export const fetchComics = createAsyncThunk(
@@ -51,7 +53,11 @@ export const fetchComics = createAsyncThunk(
 const comicsSlice = createSlice({
     name: 'comics',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        setId: (state, action: PayloadAction<number>) => {
+            state.id = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchComics.pending, (state) => {
@@ -68,5 +74,7 @@ const comicsSlice = createSlice({
             })
     }
 })
+
+export const { setId } = comicsSlice.actions;
 
 export default comicsSlice.reducer;
