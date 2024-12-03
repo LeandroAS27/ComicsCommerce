@@ -4,8 +4,6 @@ import { motion} from 'framer-motion'
 import { useNavigate } from "react-router-dom";
 
 //material ui
-import { makeStyles, createStyles } from "@mui/styles";
-import { Theme } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";
 
 //redux
