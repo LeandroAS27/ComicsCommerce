@@ -25,6 +25,10 @@ const Header = () => {
         setIsCartOpen(!isCartOpen)
     }
 
+    const handleNavigateHome = () => {
+        navigate(`/`)
+    }
+
     const handleSearch = () => { // faz a busca do produto
         if(searchProduct.trim() !==  ''){
             if(!products || products.length === 0){
@@ -35,7 +39,7 @@ const Header = () => {
 
             if(foundProduct){
                 dispatch(setId(foundProduct.id));
-                navigate(`/Products/${foundProduct.id}`, {state: {product: foundProduct}})
+                navigate(`/Products/${foundProduct.id}`, {state: {product: foundProduct}}) // ajustar o navigate, pois nao esta retornando o componente de forma correta
             }else{
                 console.log('Produto nao encontrado')
             }
@@ -57,6 +61,7 @@ const Header = () => {
                 <img 
                 src={comic} 
                 alt="Logo do loja" 
+                onClick={handleNavigateHome}
                 className="header-logo"/>
                 
                 <input 

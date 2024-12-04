@@ -7,10 +7,16 @@ interface Thumbnail {
     extension: string;
 }
 
+interface Price{
+    type: string;
+    price: number;
+}
+
 interface Comic {
     id: number;
     title: string;
     thumbnail: Thumbnail;
+    prices: Price[];
 }
 
 interface State{
