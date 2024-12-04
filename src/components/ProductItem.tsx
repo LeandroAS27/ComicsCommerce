@@ -4,7 +4,7 @@ import {motion} from 'framer-motion'
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { fetchComics } from "../redux/slice/comicsSlice.reducer";
+import { addToCart, fetchComics, toggleCart } from "../redux/slice/comicsSlice.reducer";
 import { AppDispatch, RootState } from "../redux/store";
 
 import React, { useEffect } from "react";
@@ -17,6 +17,9 @@ const ProductItem: React.FC = () => {
     const { id } = useParams<{id: string}>();
     const dispatch = useDispatch<AppDispatch>();
     const {products, loading, error} = useSelector((state:RootState) => state.comics);
+    const isCartOpen = useSelector((state: RootState) => state.comics.isCartOpen)
+    const cartItems = useSelector((state: RootState) => state.comics.cartItems);
+
 
     //buscar detalhes do produto no carregamento do componente
     useEffect(() => {
@@ -29,6 +32,23 @@ const ProductItem: React.FC = () => {
     const product = products.find((item) => item.id === Number(id));    
 
     console.log(product)
+
+    const handleClickCart = () => {
+        if(!product){
+            console.error("Produto indefinido!");
+            return;
+        }
+        dispatch(toggleCart())
+        dispatch(
+            addToCart({
+                id: product.id,
+                title: product.title,
+                thumbnail: product.thumbnail,
+                prices: product.prices[0]?.price || 0,
+                quantity: 1,
+            })
+        )
+    }
 
     if (loading) return <p><CircularProgress/></p>;
 
@@ -57,7 +77,10 @@ const ProductItem: React.FC = () => {
                         <p className="comic-title">{product.title}</p>
                         <div className='comic-price-and-button'>
                             <p className="comic-price">${product.prices[0].price}</p>
-                            <button className="add-to-cart-button">Adicionar ao carrinho</button>
+                            <button 
+                            onClick={handleClickCart}
+                            className="add-to-cart-button"
+                            >Adicionar ao carrinho</button>
                         </div>
                     </div>
             </div>
