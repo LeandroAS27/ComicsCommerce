@@ -19,18 +19,37 @@ interface Comic {
     prices: Price[];
 }
 
+interface CartItem{
+    id: number;
+    title: string;
+    thumbnail: Thumbnail;
+    prices: Price[];
+    quantity: number;
+}
+
 interface State{
     products: Comic[];
+    cartItems: CartItem[];
     error: string | null;
     loading: boolean;
     id: number | null,
+    isCartOpen: boolean,
 }
 
+const loadCartFromLocalStorage = () => {
+    const storedCart = localStorage.getItem('CartItems');
+    if(storedCart){
+        return JSON.parse(storedCart)
+    }
+    return [];
+}
 const initialState: State = {
     products: [],
+    cartItems: loadCartFromLocalStorage(),
     error: null,
     loading: false,
     id: null,
+    isCartOpen: false,
 }
 
 export const fetchComics = createAsyncThunk(
@@ -56,6 +75,7 @@ export const fetchComics = createAsyncThunk(
     }
 )
 
+
 const comicsSlice = createSlice({
     name: 'comics',
     initialState: initialState,
@@ -63,6 +83,21 @@ const comicsSlice = createSlice({
         setId: (state, action: PayloadAction<number>) => {
             state.id = action.payload;
         },
+        toggleCart(state){
+            state.isCartOpen = !state.isCartOpen;
+        },
+        setCartOpen(state, action: PayloadAction<boolean>){
+            state.isCartOpen = action.payload
+        },
+        addToCart(state, action: PayloadAction<CartItem>){
+            const existingItem = state.cartItems.find(item => item.id === action.payload.id);
+            if(existingItem){
+                existingItem.quantity += 1;
+            }else{
+                state.cartItems.push(action.payload)
+            }
+            localStorage.setItem('CartItems', JSON.stringify(state.cartItems));
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -81,6 +116,6 @@ const comicsSlice = createSlice({
     }
 })
 
-export const { setId } = comicsSlice.actions;
+export const { setId, toggleCart, setCartOpen, addToCart } = comicsSlice.actions;
 
 export default comicsSlice.reducer;
