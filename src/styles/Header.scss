@@ -51,6 +51,8 @@
     flex-direction: column;
     padding: 1rem;
     z-index: 1;
+    flex-grow: 1;
+    overflow-y: auto;
 
     &.open{
         right: 0;
@@ -60,10 +62,12 @@
 .close-icon{
     width: 32px;
     margin-left: 21rem;
+    cursor: pointer;
 }
 
 .cart-list{
     list-style-type: none;
+    
 }
 
 .cart-container{
@@ -158,4 +162,24 @@
             background-color: rgb(20, 168, 7);
         }
     }
+}
+
+.modal-button{
+    padding: 0.75rem 1.5rem;
+        background-color: #28a745;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color .3s ease;
+
+        &:hover{
+            background-color: #218838;
+        }
+
+        &:active{
+            background-color: #1e7e34;
+        }
 }

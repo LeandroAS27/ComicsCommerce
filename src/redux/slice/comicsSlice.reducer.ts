@@ -97,6 +97,24 @@ const comicsSlice = createSlice({
                 state.cartItems.push(action.payload)
             }
             localStorage.setItem('CartItems', JSON.stringify(state.cartItems));
+        },
+        incrementQuantity(state, action: PayloadAction<number>){ //aqui vai ter que alterar o preco tbm
+            const item = state.cartItems.find(cartItem => cartItem.id === action.payload);
+            if(item){
+                item.quantity += 1;
+                localStorage.setItem('CartItems', JSON.stringify(state.cartItems));
+            }
+        },
+        removeFromCart(state, action: PayloadAction<number>){ // aqui vai ter que alterar o preco tbm
+            const existingItem = state.cartItems.find(item => item.id === action.payload);
+            if(existingItem){
+                if(existingItem.quantity > 1){
+                    existingItem.quantity -= 1;
+                }else{
+                    state.cartItems = state.cartItems.filter(item => item.id !== action.payload);
+                }
+                localStorage.setItem('CartItems', JSON.stringify(state.cartItems))
+            }
         }
     },
     extraReducers: (builder) => {
@@ -116,6 +134,6 @@ const comicsSlice = createSlice({
     }
 })
 
-export const { setId, toggleCart, setCartOpen, addToCart } = comicsSlice.actions;
+export const { setId, toggleCart, setCartOpen, addToCart, incrementQuantity, removeFromCart } = comicsSlice.actions;
 
 export default comicsSlice.reducer;
