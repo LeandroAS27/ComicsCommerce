@@ -14,10 +14,12 @@ import '../styles/Header.scss'
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from '../redux/store'
 import { useNavigate } from "react-router-dom";
-import { setId, toggleCart } from "../redux/slice/comicsSlice.reducer";
+import { incrementQuantity, removeFromCart, setId, toggleCart } from "../redux/slice/comicsSlice.reducer";
+import PaymentForm from "./PaymentForm";
 
 const Header = () => {
     const [searchProduct, setSearchProduct] = useState<string>('');
+    const [isCheckoutFormOpen, setIsCheckoutFormOpen] = useState<boolean>(false);
     const cartItems = useSelector((state:RootState) => state.comics.cartItems)
     const isCartOpen = useSelector((state: RootState) => state.comics.isCartOpen)
     const {products} = useSelector((state: RootState) => state.comics)
@@ -26,6 +28,10 @@ const Header = () => {
 
     const handleNavigateHome = () => {
         navigate(`/`)
+    }
+
+    const handleOpenCheckoutForm = () => {
+        setIsCheckoutFormOpen(true)
     }
 
     useEffect(() => {
@@ -52,6 +58,14 @@ const Header = () => {
         }else{
             console.log('Digite um termo de busca valido')
         }
+    }
+
+    const handlePlusQuantity = (id: number) => {
+        dispatch(incrementQuantity(id))
+    }
+
+    const handleRemoveCart = (id: number) => {
+        dispatch(removeFromCart(id))
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,10 +120,10 @@ const Header = () => {
                                             </div>
                                         </div>
                                         <div className="cart-buttons">
-                                            <button className="cart-plus">
+                                            <button className="cart-plus" onClick={() => handlePlusQuantity(item.id)}>
                                                 <FontAwesomeIcon icon={faPlus}/>
                                             </button>
-                                            <button className="cart-trash">
+                                            <button className="cart-trash" onClick={() => handleRemoveCart(item.id)}>
                                                 <FontAwesomeIcon icon={faTrashAlt}/>
                                             </button>
                                         </div>
@@ -118,6 +132,14 @@ const Header = () => {
                             ))}
                         </ul>
                     </div>
+                )}
+                {isCheckoutFormOpen ? (
+                    <PaymentForm onSubmit={(data) => {
+                        console.log("Pagamento confirmado com os dados:", data)
+                        setIsCheckoutFormOpen(false)
+                    }} />
+                ) : (
+                    <button onClick={handleOpenCheckoutForm} className="modal-button">Finalizar Compra</button>
                 )}
             </div>
         </div>

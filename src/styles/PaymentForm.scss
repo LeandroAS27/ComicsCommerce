@@ -1,0 +1,31 @@
+.checkout-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .checkout-form_title{
+        font-weight: bold;
+        margin-left: 0.5rem;
+        font-size: 1.25rem;
+    }
+
+    .checkout-form_expiry-cvv{
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .checkout-form_submit-button{
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color .3s;
+
+        &:hover{
+            background-color: #1f8036;
+        }
+    }
+}
