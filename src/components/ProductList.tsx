@@ -13,7 +13,7 @@ import { RootState } from "../redux/store";
 import { setId } from "../redux/slice/comicsSlice.reducer";
 
 //styles
-import styles from '../styles/ProductList.module.scss'
+import '../styles/ProductList.scss'
 
 const ProductList: React.FC = () => {
     const dispatch = useDispatch();
@@ -35,21 +35,21 @@ const ProductList: React.FC = () => {
     if (error) return <p>{error}</p>
 
     return(
-        <div className={styles["comic-list"]}>
+        <div className="comic-list">
             {products.map((comic) => (
             <motion.div 
             whileHover={{ scale: [null, 1.1, 1.1] }}
             transition={{ duration: 0.3 }}
             key={comic.id} 
-            className={styles["comic-card"]}>
-                    <p className={styles["comic-card_title"]}>{comic.title}</p>
+            className="comic-card">
+                    <p className="comic-card_title">{comic.title}</p>
                     <img 
-                    className={styles["comic-card_thumbnail"]}
+                    className="comic-card_thumbnail"
                     src={`${comic.thumbnail.path}.${comic.thumbnail.extension}`} 
                     alt={comic.title || 'Thumbnail'} />
                     <button 
                     onClick={() => handleClickNavigation(comic.id)}
-                    className={styles["comic-card_button"]}>More Details</button>
+                    className="comic-card_button">More Details</button>
                 </motion.div>
             ))}
         </div>

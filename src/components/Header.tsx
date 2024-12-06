@@ -23,6 +23,7 @@ const Header = () => {
     const cartItems = useSelector((state:RootState) => state.comics.cartItems)
     const isCartOpen = useSelector((state: RootState) => state.comics.isCartOpen)
     const {products} = useSelector((state: RootState) => state.comics)
+    const total = cartItems.reduce((acc, item) => acc + item.prices * item.quantity, 0);
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -50,7 +51,7 @@ const Header = () => {
 
             if(foundProduct){
                 dispatch(setId(foundProduct.id));
-                navigate(`/Products/${foundProduct.id}`, {state: {product: foundProduct}}) // ajustar o navigate, pois nao esta retornando o componente de forma correta
+                navigate(`/Product/${foundProduct.id}`, {state: {product: foundProduct}})
             }else{
                 console.log('Produto nao encontrado')
             }
@@ -133,10 +134,14 @@ const Header = () => {
                         </ul>
                     </div>
                 )}
+                <p className="total-price">Total: ${total.toFixed(2)}</p>
                 {isCheckoutFormOpen ? (
-                    <PaymentForm onSubmit={(data) => {
-                        console.log("Pagamento confirmado com os dados:", data)
-                        setIsCheckoutFormOpen(false)
+                    <PaymentForm onSubmit={(data, discount) => {
+                        const totalWithDiscount = total - (total * (discount / 100));
+                        console.log("Pagamento confirmado com os dados:", data);
+                        console.log(`Total com desconto aplicado: ${totalWithDiscount.toFixed(2)}`);
+                        alert('Pagamento Confirmado');
+                        setIsCheckoutFormOpen(false);
                     }} />
                 ) : (
                     <button onClick={handleOpenCheckoutForm} className="modal-button">Finalizar Compra</button>
