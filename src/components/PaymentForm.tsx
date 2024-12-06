@@ -1,23 +1,49 @@
 import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
 import '../styles/PaymentForm.scss';
 import InputMask from 'react-input-mask';
 
 //material ui
 import Box from '@mui/material/Box';
 import TextField from "@mui/material/TextField";
+import { Button } from '@mui/material';
 
 interface PaymentForm{
     cardHolder: string,
     cardNumber: string,
     expireDate: string,
-    cvv: string
+    cvv: string,
+    couponCode?: string;
 }
 
-const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm) => void}) => {
-    const {register, formState: { errors }, control, handleSubmit} = useForm<PaymentForm>();
+const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: number) => void}) => {
+    const {register, formState: { errors }, control, handleSubmit, setValue, getValues} = useForm<PaymentForm>();
+
+    const mockCoupons = {
+        "DESCONTO10": 10,
+        "FRETEGRATIS": 0,
+        "BLACKFRIDAY": 15,
+    }
+    
+    const [discount, setDiscount] = useState<number>(0);
+    const [couponError, setCouponError] = useState<string | null>(null);
+
+    const handleCouponValidation = () => {
+        const couponCode = getValues("couponCode") || "";
+        if(mockCoupons[couponCode.toUpperCase()]){
+            const discountValue = mockCoupons[couponCode.toUpperCase()];
+            setDiscount(discountValue)
+            setCouponError(null);
+            alert(`Cupom aplicado! Voce ganhou ${discountValue}% de desconto.`);
+        }else{
+            setDiscount(0);
+            setCouponError("Cupom invalido. Tente novamente.");
+        }
+    };
+
     return(
         <form 
-        onSubmit={handleSubmit(onSubmit)} 
+        onSubmit={handleSubmit((data) => onSubmit(data, discount))} 
         className='checkout-form'>
             <h1 className="checkout-form_title">Cartao de Crédito</h1>
             <Box
@@ -25,6 +51,7 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm) => void}) => 
                 noValidate
                 autoComplete="off"
             >
+                {/* Número do Cartão */}
                 <Controller
                     name="cardNumber"
                     control={control}
@@ -57,6 +84,7 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm) => void}) => 
                         </InputMask>
                     )}
                 />
+                {/* Nome do Titular */}
                 <TextField 
                 id="cardHolder" 
                 label="Nome do Titular" 
@@ -101,7 +129,7 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm) => void}) => 
                             </InputMask>
                         )}
                     />
-
+                    {/* CVV */}
                     <TextField 
                     id="cvv" 
                     label="CVV" 
@@ -118,6 +146,25 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm) => void}) => 
                     })}
                     />
                 </div>
+                {/* Cupom de Desconto */}
+                <div className='checkout-form_coupon'>
+                    <TextField
+                        id='couponCode'
+                        label='Código de Desconto'
+                        variant='outlined'
+                        placeholder='Insira seu cupom'
+                        {...register('couponCode')}
+                    />
+                    <Button
+                        type='button'
+                        variant='outlined'
+                        onClick={handleCouponValidation}
+                    >
+                        Aplicar Cupom
+                    </Button>
+                </div>
+                {couponError && <p className='coupon-error'>{couponError}</p>}
+                {discount > 0 && <p className='coupon-success'>Cupom aplicado: {discount}%</p>}
             </Box>
             <button type='submit' className='checkout-form_submit-button'>Confirmar Pagamento</button>
         </form>

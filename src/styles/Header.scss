@@ -11,6 +11,11 @@
         .header-logo{
             width: 80px;
             cursor: pointer;
+            transition: transform 0.2s;
+            
+            &:hover{
+                transform: scale(1.1);
+            }
         }
 
         input{
@@ -28,6 +33,7 @@
         .header-cart-icon{
             width: 32px;
             height: 32px;
+            filter: invert(1);
             cursor: pointer;
             transition: transform 0.2s;
 
@@ -182,4 +188,10 @@
         &:active{
             background-color: #1e7e34;
         }
+}
+
+.total-price{
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
 }
