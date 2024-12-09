@@ -1,50 +1,104 @@
-# React + TypeScript + Vite
+# ComicsCommerce (e-commerce) (desafio Front-End)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descrição
 
-Currently, two official plugins are available:
+Este é um projeto de ecommerce desenvolvido em **React** inspirado no universo Marvel, com o objetivo de listar e detalhar quadrinhos utilizando a API oficial da Marvel. O projeto inclui duas telas principais:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Tela Inicial**: Apresenta uma lista de quadrinhos disponíveis com filtros interativos.
 
-## Expanding the ESLint configuration
+2. **Tela do Quadrinho**: Apresenta o quadrinho com suas informações e preço.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Além disso, implementei um **modal lateral de checkout** para adicionar e visualizar itens no carrinho, proporcionando uma experiência de compra rápida e intuitiva.
 
-- Configure the top-level `parserOptions` property like this:
+### Tela Inicial
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+![Tela Inicial](./public/Tela%20inicial.png)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Tela do Quadrinho
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+![Tela do Quadrinho](./public/Tela%20do%20Quadrinho.png)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Tela com o Modal(Mostrando os produtos)
+
+![Tela com o Modal(Mostrando os produtos)](./public/Tela%20com%20o%20modal.png)
+
+### Tela com o Modal(Opção de Pagamento)
+
+![Tela com o Modal(Opção de Pagamento)](./public/Tela%20com%20opcao%20de%20pagamento.png)
+
+## Tecnologias Utilizadas
+
+- **React com Redux** (para gerenciamento de estado).
+- **TypeScript** (para maior robustez e manutenção do código).
+- **SASS** (para estilização modular e flexível).
+- **Material UI** (para componentes responsivos e acessíveis).
+- **Vite** (para o ambiente de desenvolvimento).
+- **LocalStorage** (para persistir os dados no carrinho entre sessões).
+- **Framer Motion** (para animações).
+- **React Hook Form** (para validação e gerenciamento do formulário de checkout).
+- **React Router** (para navegação e estruturação de rotas).
+- **Axios** (para consumo da API da Marvel e manipulação eficiente das requisições).
+- **crypto-js** (para encriptação de dados sensíveis no localStorage).
+
+## Funcionalidades
+
+- Visualização de produtos disponíveis
+- Consulta dos produtos
+- Adição de produto no carrinho
+- Atualização de quantidades ao adicionar o mesmo produto no carrinho.
+- Exclusão de quantidades e do produto no carrinho.
+- Adição de quantidade antes de clicar para comprar no carrinho.
+- Redirecionamento para a página de checkout com os produtos selecionados.
+- Persistência dos dados do carrinho usando o localStorage.
+- Validação e submissão do formulário de pagamento.
+- Utilização de Cupom de desconto no pagamento.
+
+## Diferenciais do Projeto
+
+- **Animações Interativas**: Transições fluidas usando Framer Motion, como o modal lateral de checkout e exibição dos produtos.
+
+- **Design Responsivo**: Interface adaptada para dispositivos móveis e desktops.
+
+- **Checkout Intuitivo**: Modal lateral que melhora a experiência de usuário, com persistência de dados usando o LocalStorage.
+
+- **Código Limpo e Escalável**: Estrutura desenvolvida com boas práticas de TypeScript, React, e Redux.
+
+## Instalação
+
+## Pré-requisitos
+
+- **Node.js** (você pode verificar se está instalado usando node -v)
+- **npm ou yarn** para gerenciar dependências.
+
+## Passo a passo
+
+1. Clone o repositório:
+
+2. Navegue até o diretório do projeto:
+
+cd ecommerce-app
+
+3. Instale as dependências:
+
+npm install
+
+# ou
+
+yarn install
+
+4. Execute o projeto:
+
+npm run dev
+
+# ou
+
+yarn dev
+O projeto estará disponível em http://localhost:5173.
+
+## Funcionalidades Futuras
+
+- Sistema de login e autenticação.
+- Implementação de pagamentos reais (ex. integração com Stripe)
+
+Licença
+Este projeto está licenciado sob a MIT License.
