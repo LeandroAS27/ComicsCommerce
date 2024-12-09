@@ -36,7 +36,7 @@
         margin: 0;
     }
     &_button{
-        --color: #560bad;
+        --color: #c09f42;
         font-family: inherit;
         display: inline-block;
         width: 8em;
@@ -78,7 +78,7 @@
     }
       
     &_button:active:before {
-        background: #3a0ca3;
+        background: #a37b0c;
         transition: background 0s;
     }
 }
