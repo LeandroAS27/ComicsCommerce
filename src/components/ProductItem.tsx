@@ -17,9 +17,6 @@ const ProductItem: React.FC = () => {
     const { id } = useParams<{id: string}>();
     const dispatch = useDispatch<AppDispatch>();
     const {products, loading, error} = useSelector((state:RootState) => state.comics);
-    const isCartOpen = useSelector((state: RootState) => state.comics.isCartOpen)
-    const cartItems = useSelector((state: RootState) => state.comics.cartItems);
-
 
     //buscar detalhes do produto no carregamento do componente
     useEffect(() => {
@@ -44,7 +41,7 @@ const ProductItem: React.FC = () => {
                 id: product.id,
                 title: product.title,
                 thumbnail: product.thumbnail,
-                prices: product.prices[0]?.price || 0,
+                prices: product.prices?.length > 0 ? product.prices : [{ price: 0, type: 'default'}],
                 quantity: 1,
             })
         )

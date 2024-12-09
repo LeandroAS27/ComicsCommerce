@@ -23,9 +23,16 @@ const Header = () => {
     const cartItems = useSelector((state:RootState) => state.comics.cartItems)
     const isCartOpen = useSelector((state: RootState) => state.comics.isCartOpen)
     const {products} = useSelector((state: RootState) => state.comics)
-    const total = cartItems.reduce((acc, item) => acc + item.prices * item.quantity, 0);
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+
+    const total = cartItems.reduce((acc, item) => {
+        const price = typeof item.prices === 'number' ? item.prices : 10;
+        return acc + price * item.quantity;
+    }, 0);
+
+
 
     const handleNavigateHome = () => {
         navigate(`/`)
@@ -34,6 +41,7 @@ const Header = () => {
     const handleOpenCheckoutForm = () => {
         setIsCheckoutFormOpen(true)
     }
+
 
     useEffect(() => {
         if(cartItems.length > 0){

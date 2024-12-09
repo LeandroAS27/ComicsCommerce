@@ -7,16 +7,19 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 //redux
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchComics } from "../redux/slice/comicsSlice.reducer";
 import { RootState } from "../redux/store";
 import { setId } from "../redux/slice/comicsSlice.reducer";
+
+//hooks
+import { useAppDispatch } from "../hooks/hooks";
 
 //styles
 import '../styles/ProductList.scss'
 
 const ProductList: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const {products, loading, error} = useSelector((state: RootState) => state.comics);
 
