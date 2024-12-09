@@ -16,10 +16,12 @@ interface PaymentForm{
     couponCode?: string;
 }
 
-const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: number) => void}) => {
-    const {register, formState: { errors }, control, handleSubmit, setValue, getValues} = useForm<PaymentForm>();
 
-    const mockCoupons = {
+const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: number) => void}) => {
+    const {register, formState: { errors }, control, handleSubmit, getValues} = useForm<PaymentForm>();
+    
+    type DiscountType = "DESCONTO10" | "FRETEGRATIS" | "BLACKFRIDAY";
+    const mockCoupons: Record<DiscountType, number> = {
         "DESCONTO10": 10,
         "FRETEGRATIS": 0,
         "BLACKFRIDAY": 15,
@@ -28,11 +30,17 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: num
     const [discount, setDiscount] = useState<number>(0);
     const [couponError, setCouponError] = useState<string | null>(null);
 
+    const isValidCoupon = (code: string): code is DiscountType => {
+        return (Object.keys(mockCoupons) as string[]).includes(code);
+    }
+
     const handleCouponValidation = () => {
         const couponCode = getValues("couponCode") || "";
-        if(mockCoupons[couponCode.toUpperCase()]){
-            const discountValue = mockCoupons[couponCode.toUpperCase()];
-            setDiscount(discountValue)
+        const formattedCouponCode = couponCode.toUpperCase();
+
+        if(isValidCoupon(formattedCouponCode)){
+            const discountValue = mockCoupons[formattedCouponCode];
+            setDiscount(discountValue);
             setCouponError(null);
             alert(`Cupom aplicado! Voce ganhou ${discountValue}% de desconto.`);
         }else{
@@ -47,6 +55,7 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: num
         className='checkout-form'>
             <h1 className="checkout-form_title">Cartao de Crédito</h1>
             <Box
+                component='form'
                 sx={{ '& > :not(style)': { m: 1, width: '500', maxWidth: '100%' } }}
                 noValidate
                 autoComplete="off"
