@@ -28,8 +28,6 @@ const ProductList: React.FC = () => {
         navigate(`/Product/${comicId}`);
     }
 
-    console.log(products)
-
     useEffect(() => {
         dispatch(fetchComics());
     }, [dispatch])

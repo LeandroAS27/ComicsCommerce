@@ -28,8 +28,6 @@ const ProductItem: React.FC = () => {
     //encontrar o produto pelo id fornecido no url
     const product = products.find((item) => item.id === Number(id));    
 
-    console.log(product)
-
     const handleClickCart = () => {
         if(!product){
             console.error("Produto indefinido!");
