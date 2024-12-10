@@ -87,7 +87,7 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: num
                                 placeholder="0000 0000 0000 0000"
                                 error={!!errors.cardNumber}
                                 helperText={errors.cardNumber ? errors.cardNumber.message : ''}
-                                fullWidth
+                                sx={{ width: '95%', maxWidth: '380px'}}
                                 />
                             )}
                         </InputMask>
@@ -101,10 +101,10 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: num
                 placeholder="Nome impresso no cartão"
                 error={!!errors.cardHolder}
                 helperText={errors.cardHolder ? errors.cardHolder.message : ''}
-                fullWidth
                 {...register('cardHolder', {
                     required: "Insira um nome válido",
                 })}
+                sx={{ width: '95%', maxWidth: '380px'}}
                 />
                 <div className="checkout-form_expiry-cvv">
                     <Controller
@@ -163,11 +163,13 @@ const PaymentForm = ({ onSubmit }: { onSubmit: (data: PaymentForm, discount: num
                         variant='outlined'
                         placeholder='Insira seu cupom'
                         {...register('couponCode')}
+                        sx={{flexGrow: 1}}
                     />
                     <Button
                         type='button'
                         variant='outlined'
                         onClick={handleCouponValidation}
+                        sx={{ alignSelf: 'center'}}
                     >
                         Aplicar Cupom
                     </Button>

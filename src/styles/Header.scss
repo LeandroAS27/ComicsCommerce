@@ -196,3 +196,43 @@
     font-weight: bold;
     margin: 10px 0;
 }
+
+//responsiveness
+
+@media screen and (max-width: 420px) {
+    .cart-modal{
+        width: 100%;
+        right: -120%;
+        box-shadow: none;
+        padding: 0.5rem;
+        transition: right 0.3s ease-in-out;
+
+        &.open{
+            // left: 0;
+            right: 0;
+        }
+    }
+
+    .cart-buttons{
+        margin-left: 5px;
+        button{
+            border: 1px solid black;
+        }
+    }
+
+    .close-icon{
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        cursor: pointer;
+    }
+
+    .cart-buttons{
+        &.cart-plus{
+            font-size: 2rem;
+        }
+        &.cart-trash{
+            font-size: 2rem;
+        }
+    }
+}

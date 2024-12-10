@@ -28,4 +28,12 @@
             background-color: #1f8036;
         }
     }
+
+}
+
+.checkout-form_coupon{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
 }

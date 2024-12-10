@@ -1,8 +1,9 @@
 .comic-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 1rem;
     padding: 1rem;
+    justify-items: center;
 }
 
 .comic-card{
@@ -80,5 +81,20 @@
     &_button:active:before {
         background: #a37b0c;
         transition: background 0s;
+    }
+
+}
+
+//responsiveness
+
+@media screen and (max-width: 430px){
+    .comic-list{
+        grid-template-columns: 1fr;
+        justify-items: center;
+        justify-content: center;
+    }
+
+    .comic-card{
+        max-width: 90%;
     }
 }
